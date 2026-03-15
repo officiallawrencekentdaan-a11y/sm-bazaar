@@ -307,11 +307,12 @@
         })();
     </script>
     <!-- 
-        Note on iframe height: Due to cross-origin restrictions (the embedded URLs are from a different domain), 
-        it is not possible to automatically expand the iframe height to match its content. 
-        The iframe container uses a fixed viewport-relative height (90vh). 
-        The scrolling="no" attribute and container overflow:hidden hide any scrollbars that might appear inside the iframe.
-        If the content overflows, it will be clipped – this is the trade‑off for hiding scrollbars.
+        Note: Because Google Apps Script web apps send the HTTP header "X-Frame-Options: SAMEORIGIN",
+        they cannot be embedded in iframes on external domains like Netlify. 
+        You will likely see a blank iframe or a console error:
+        "Refused to display '...' in a frame because it set 'X-Frame-Options' to 'sameorigin'."
+        This is a security restriction that cannot be bypassed with HTML/JavaScript alone.
+        If you need to display the content, consider using direct links or a server-side proxy.
     -->
 </body>
 </html>
