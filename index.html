@@ -4,8 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>SM Bazaar</title>
-    <!-- Favicon added here -->
-    <link rel="icon" type="image/jpeg" href="https://i.postimg.cc/7ZrZ3vf1/CP_Logo_PNG.png">
+    <!-- Favicon -->
+    <link rel="icon" type="image/png" href="https://i.postimg.cc/7ZrZ3vf1/CP_Logo_PNG.png">
     <style>
         * {
             margin: 0;
@@ -42,10 +42,19 @@
         }
 
         .site-title {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
             font-size: 2rem;
             font-weight: 500;
             letter-spacing: -0.5px;
             color: #3c4043;
+        }
+
+        .site-title img {
+            height: 2rem;
+            width: auto;
+            display: block;
         }
 
         .nav-links {
@@ -72,22 +81,39 @@
             border-bottom-color: #dadce0;
         }
 
-        /* Hero / Welcome section */
+        /* Hero / Welcome section with background image */
         .welcome {
-            background-color: white;
+            position: relative;
             margin: 1.5rem 2rem;
             padding: 2.5rem 2rem;
             border-radius: 0.5rem;
             box-shadow: 0 1px 3px rgba(0,0,0,0.05);
             border: 1px solid #f1f3f4;
             text-align: center;
+            color: white;
+            background-image: url('https://i.postimg.cc/JnWYkVfy/percision-blog-header-junk-food-102323.jpg');
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            isolation: isolate;
+        }
+
+        /* Dark overlay for better text readability */
+        .welcome::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background-color: rgba(0, 0, 0, 0.5);
+            border-radius: 0.5rem;
+            z-index: -1;
         }
 
         .welcome h1 {
             font-size: 2.8rem;
             font-weight: 400;
             margin-bottom: 2rem;
-            color: #1e2a3a;
+            color: white;
+            text-shadow: 0 2px 4px rgba(0,0,0,0.3);
         }
 
         .bazaar-cards {
@@ -101,19 +127,21 @@
         .card {
             flex: 1 1 250px;
             max-width: 320px;
-            background-color: #f8f9fa;
+            background-color: rgba(255, 255, 255, 0.9);
+            backdrop-filter: blur(2px);
             border-radius: 1rem;
             padding: 2rem 1rem;
             text-decoration: none;
-            color: inherit;
+            color: #202124;
             border: 1px solid #e8eaed;
-            transition: box-shadow 0.15s, border-color 0.15s;
+            transition: box-shadow 0.15s, border-color 0.15s, background-color 0.15s;
             cursor: pointer;
         }
 
         .card:hover {
             border-color: #1a73e8;
-            box-shadow: 0 4px 8px rgba(0,0,0,0.05);
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+            background-color: rgba(255, 255, 255, 0.95);
         }
 
         .card h2 {
@@ -132,7 +160,11 @@
         .iframe-container {
             margin: 1.5rem 2rem;
             display: none; /* hidden by default */
-            height: 90vh; /* adjust as needed */
+            height: 90vh; /* fixed height – cross‑origin prevents auto‑expansion */
+            border-radius: 0.5rem;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+            border: 1px solid #f1f3f4;
+            overflow: hidden; /* hides any potential iframe scrollbars */
         }
 
         .iframe-container iframe {
@@ -140,9 +172,8 @@
             height: 100%;
             border: none;
             background: white;
-            border-radius: 0.5rem;
-            box-shadow: 0 1px 3px rgba(0,0,0,0.05);
-            border: 1px solid #f1f3f4;
+            display: block;
+            /* Scrolling is disabled via attribute, overflow hidden hides any leftover */
         }
 
         /* Mobile */
@@ -177,9 +208,12 @@
         🎉 SM Bazaar is now open! Special offers this weekend only.
     </div>
 
-    <!-- Main navigation -->
+    <!-- Main navigation with logo -->
     <div class="main-nav">
-        <div class="site-title">SM BAZAAR</div>
+        <div class="site-title">
+            <img src="https://i.postimg.cc/7ZrZ3vf1/CP_Logo_PNG.png" alt="CP Logo">
+            SM BAZAAR
+        </div>
         <div class="nav-links">
             <a id="nav-home" class="active">Home</a>
             <a id="nav-baybay">SM Baybay Bazaar</a>
@@ -187,7 +221,7 @@
         </div>
     </div>
 
-    <!-- Welcome section (visible by default) -->
+    <!-- Welcome section with background image -->
     <main id="welcome-section" class="welcome">
         <h1>WELCOME TO SM BAZAAR</h1>
         <div class="bazaar-cards">
@@ -204,12 +238,13 @@
 
     <!-- Iframe container for embedded pages (hidden initially) -->
     <div id="iframe-container" class="iframe-container">
+        <!-- scrolling="no" disables iframe scrollbars; combined with container overflow:hidden ensures no internal scrolling -->
         <iframe id="content-iframe" src="about:blank" scrolling="no"></iframe>
     </div>
 
     <script>
         (function() {
-            // URLs for the two bazaars
+            // URLs for the two bazaars (Google Apps Script web apps)
             const baybayUrl = "https://script.google.com/a/macros/outdoorequipped.com/s/AKfycbx3f9uOLXaGEPfzbcwRHF0LwFV8hBi6oD32Dttls31NvZmonBmPuyYo0KEK5fMVqaOC/exec";
             const cebuUrl = "https://script.google.com/a/macros/outdoorequipped.com/s/AKfycbxFH_c4aD4ePIuvsqrC4CA12Gm09kFPDfCMZXsYJjf1HlzwxKObg-WosUKOk3AbEYBo/exec";
 
@@ -271,5 +306,12 @@
             });
         })();
     </script>
+    <!-- 
+        Note on iframe height: Due to cross-origin restrictions (the embedded URLs are from a different domain), 
+        it is not possible to automatically expand the iframe height to match its content. 
+        The iframe container uses a fixed viewport-relative height (90vh). 
+        The scrolling="no" attribute and container overflow:hidden hide any scrollbars that might appear inside the iframe.
+        If the content overflows, it will be clipped – this is the trade‑off for hiding scrollbars.
+    -->
 </body>
 </html>
