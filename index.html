@@ -6,6 +6,10 @@
     <title>SM Bazaar</title>
     <!-- Favicon -->
     <link rel="icon" type="image/png" href="https://i.postimg.cc/7ZrZ3vf1/CP_Logo_PNG.png">
+    <!-- Google Fonts: Montserrat -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700;800&display=swap" rel="stylesheet">
     <style>
         * {
             margin: 0;
@@ -14,7 +18,7 @@
         }
 
         body {
-            font-family: system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', sans-serif;
+            font-family: 'Montserrat', system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
             background-color: #f8f9fa;
             color: #202124;
             line-height: 1.5;
@@ -51,7 +55,7 @@
             align-items: center;
             gap: 0.5rem;
             font-size: 1.8rem;
-            font-weight: 500;
+            font-weight: 700; /* bolder */
             letter-spacing: -0.5px;
             color: #3c4043;
         }
@@ -66,6 +70,7 @@
             display: flex;
             gap: 2rem;
             font-size: 1rem;
+            font-weight: 500;
         }
 
         .nav-links a {
@@ -90,10 +95,9 @@
         .content-area {
             flex: 1;
             position: relative;
-            /* No margins or borders – full width/height */
         }
 
-        /* Welcome section (visible by default) – full coverage */
+        /* Welcome section (visible by default) – full coverage with overlay */
         .welcome {
             position: absolute;
             top: 0;
@@ -104,69 +108,81 @@
             background-size: cover;
             background-position: center;
             background-repeat: no-repeat;
-            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 2rem;
+        }
+
+        /* White card for welcome message */
+        .welcome-card {
+            background: white;
+            border-radius: 1.5rem;
+            padding: 3rem 4rem;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
+            border: 1px solid rgba(255, 255, 255, 0.5);
             text-align: center;
-            padding: 2.5rem 2rem;  /* inner spacing for text, not outer */
-            isolation: isolate;
-            overflow: auto;
-            /* No border, no radius – seamless */
+            max-width: 800px;
+            width: 100%;
         }
 
-        /* Dark overlay for welcome text */
-        .welcome::before {
-            content: '';
-            position: absolute;
-            inset: 0;
-            background-color: rgba(0, 0, 0, 0.5);
-            z-index: -1;
+        .welcome-card h1 {
+            font-size: 4rem;
+            font-weight: 800; /* extra bold */
+            color: #1e2a3a;
+            margin-bottom: 0.5rem;
+            line-height: 1.2;
+            letter-spacing: -0.02em;
         }
 
-        .welcome h1 {
-            font-size: 2.8rem;
+        .welcome-card h1 span {
+            display: block;
+            font-size: 2.5rem;
             font-weight: 400;
-            margin-bottom: 2rem;
-            color: white;
-            text-shadow: 0 2px 4px rgba(0,0,0,0.3);
+            color: #5f6368;
+            margin-top: 0.5rem;
         }
 
+        /* Bazaar cards container */
         .bazaar-cards {
             display: flex;
             flex-wrap: wrap;
             justify-content: center;
             gap: 2rem;
-            margin-top: 1rem;
+            margin-top: 2.5rem;
         }
 
         .card {
-            flex: 1 1 250px;
-            max-width: 320px;
-            background-color: rgba(255, 255, 255, 0.9);
-            backdrop-filter: blur(2px);
-            border-radius: 1rem;
+            flex: 1 1 220px;
+            max-width: 260px;
+            background: white;
+            border-radius: 2rem;
             padding: 2rem 1rem;
             text-decoration: none;
             color: #202124;
-            border: 1px solid #e8eaed;
-            transition: box-shadow 0.15s, border-color 0.15s, background-color 0.15s;
+            border: 1px solid #eaeef2;
+            transition: all 0.2s ease;
             cursor: pointer;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.03);
         }
 
         .card:hover {
+            transform: translateY(-6px);
             border-color: #1a73e8;
-            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
-            background-color: rgba(255, 255, 255, 0.95);
+            box-shadow: 0 12px 20px rgba(0, 0, 0, 0.08);
         }
 
         .card h2 {
             font-size: 1.8rem;
-            font-weight: 450;
+            font-weight: 700;
             margin-bottom: 0.5rem;
             color: #1a73e8;
         }
 
         .card p {
             color: #5f6368;
-            font-size: 0.95rem;
+            font-size: 1rem;
+            font-weight: 400;
         }
 
         /* Iframe container (hidden by default) – full coverage */
@@ -178,7 +194,6 @@
             bottom: 0;
             display: none; /* hidden by default */
             background: white;
-            /* No border, no radius – seamless */
         }
 
         .iframe-container iframe {
@@ -189,13 +204,11 @@
             display: block;
         }
 
-        /* Mobile adjustments – keep margins only for nav, but content area remains full */
+        /* Mobile adjustments */
         @media (max-width: 700px) {
             .main-nav {
                 padding-left: 1rem;
                 padding-right: 1rem;
-            }
-            .main-nav {
                 flex-direction: column;
                 align-items: start;
                 gap: 0.75rem;
@@ -204,12 +217,20 @@
                 flex-wrap: wrap;
                 gap: 1rem;
             }
-            .welcome h1 {
-                font-size: 2rem;
+            .welcome-card {
+                padding: 2rem 1.5rem;
             }
-            /* Keep welcome padding smaller on mobile */
-            .welcome {
-                padding: 1.5rem 1rem;
+            .welcome-card h1 {
+                font-size: 2.5rem;
+            }
+            .welcome-card h1 span {
+                font-size: 1.8rem;
+            }
+            .bazaar-cards {
+                gap: 1rem;
+            }
+            .card {
+                max-width: 100%;
             }
         }
     </style>
@@ -233,26 +254,30 @@
         </div>
     </div>
 
-    <!-- Content area that holds either welcome or iframe (now edge-to-edge) -->
+    <!-- Content area that holds either welcome or iframe (edge-to-edge) -->
     <div class="content-area">
         <!-- Welcome section (visible by default) -->
         <main id="welcome-section" class="welcome">
-            <h1>WELCOME TO SM BAZAAR</h1>
-            <div class="bazaar-cards">
-                <div id="card-baybay" class="card">
-                    <h2>SM Baybay Bazaar</h2>
-                    <p>Explore the Baybay market</p>
-                </div>
-                <div id="card-cebu" class="card">
-                    <h2>SM Cebu Bazaar</h2>
-                    <p>Discover Cebu's finest</p>
+            <div class="welcome-card">
+                <h1>
+                    WELCOME TO<br>
+                    <span>SM BAZAAR</span>
+                </h1>
+                <div class="bazaar-cards">
+                    <div id="card-baybay" class="card">
+                        <h2>SM Baybay</h2>
+                        <p>Explore the Baybay market</p>
+                    </div>
+                    <div id="card-cebu" class="card">
+                        <h2>SM Cebu</h2>
+                        <p>Discover Cebu's finest</p>
+                    </div>
                 </div>
             </div>
         </main>
 
         <!-- Iframe container for embedded pages (hidden initially) -->
         <div id="iframe-container" class="iframe-container">
-            <!-- iframe with normal scrolling (so content can scroll inside) -->
             <iframe id="content-iframe" src="about:blank"></iframe>
         </div>
     </div>
@@ -276,9 +301,8 @@
 
             // Helper to show welcome and hide iframe
             function showWelcome() {
-                welcomeSection.style.display = 'block';
+                welcomeSection.style.display = 'flex';  // back to flex for centering
                 iframeContainer.style.display = 'none';
-                // Update active nav
                 navLinks.forEach(link => link.classList.remove('active'));
                 navHome.classList.add('active');
             }
@@ -288,34 +312,33 @@
                 contentIframe.src = url;
                 welcomeSection.style.display = 'none';
                 iframeContainer.style.display = 'block';
-                // Update active nav
                 navLinks.forEach(link => link.classList.remove('active'));
                 activeLink.classList.add('active');
             }
 
             // Event listeners for navigation
-            navHome.addEventListener('click', function(e) {
+            navHome.addEventListener('click', (e) => {
                 e.preventDefault();
                 showWelcome();
             });
 
-            navBaybay.addEventListener('click', function(e) {
+            navBaybay.addEventListener('click', (e) => {
                 e.preventDefault();
                 loadUrl(baybayUrl, navBaybay);
             });
 
-            navCebu.addEventListener('click', function(e) {
+            navCebu.addEventListener('click', (e) => {
                 e.preventDefault();
                 loadUrl(cebuUrl, navCebu);
             });
 
             // Event listeners for cards
-            cardBaybay.addEventListener('click', function(e) {
+            cardBaybay.addEventListener('click', (e) => {
                 e.preventDefault();
                 loadUrl(baybayUrl, navBaybay);
             });
 
-            cardCebu.addEventListener('click', function(e) {
+            cardCebu.addEventListener('click', (e) => {
                 e.preventDefault();
                 loadUrl(cebuUrl, navCebu);
             });
