@@ -86,14 +86,14 @@
             border-bottom-color: #dadce0;
         }
 
-        /* Content area (fills remaining space, has consistent margins) */
+        /* Content area (fills remaining space, no margins) */
         .content-area {
             flex: 1;
-            margin: 1.5rem 2rem;
             position: relative;
+            /* No margins or borders – full width/height */
         }
 
-        /* Welcome section (visible by default) */
+        /* Welcome section (visible by default) – full coverage */
         .welcome {
             position: absolute;
             top: 0;
@@ -104,13 +104,12 @@
             background-size: cover;
             background-position: center;
             background-repeat: no-repeat;
-            border-radius: 0.5rem;
-            border: 1px solid #f1f3f4;
             color: white;
             text-align: center;
-            padding: 2.5rem 2rem;
+            padding: 2.5rem 2rem;  /* inner spacing for text, not outer */
             isolation: isolate;
-            overflow: auto; /* allows scrolling if content overflows (rare) */
+            overflow: auto;
+            /* No border, no radius – seamless */
         }
 
         /* Dark overlay for welcome text */
@@ -119,7 +118,6 @@
             position: absolute;
             inset: 0;
             background-color: rgba(0, 0, 0, 0.5);
-            border-radius: 0.5rem;
             z-index: -1;
         }
 
@@ -171,7 +169,7 @@
             font-size: 0.95rem;
         }
 
-        /* Iframe container (hidden by default) */
+        /* Iframe container (hidden by default) – full coverage */
         .iframe-container {
             position: absolute;
             top: 0;
@@ -179,9 +177,8 @@
             right: 0;
             bottom: 0;
             display: none; /* hidden by default */
-            border-radius: 0.5rem;
-            border: 1px solid #f1f3f4;
             background: white;
+            /* No border, no radius – seamless */
         }
 
         .iframe-container iframe {
@@ -192,15 +189,11 @@
             display: block;
         }
 
-        /* Mobile adjustments */
+        /* Mobile adjustments – keep margins only for nav, but content area remains full */
         @media (max-width: 700px) {
             .main-nav {
                 padding-left: 1rem;
                 padding-right: 1rem;
-            }
-            .content-area {
-                margin-left: 1rem;
-                margin-right: 1rem;
             }
             .main-nav {
                 flex-direction: column;
@@ -213,6 +206,10 @@
             }
             .welcome h1 {
                 font-size: 2rem;
+            }
+            /* Keep welcome padding smaller on mobile */
+            .welcome {
+                padding: 1.5rem 1rem;
             }
         }
     </style>
@@ -236,7 +233,7 @@
         </div>
     </div>
 
-    <!-- Content area that holds either welcome or iframe -->
+    <!-- Content area that holds either welcome or iframe (now edge-to-edge) -->
     <div class="content-area">
         <!-- Welcome section (visible by default) -->
         <main id="welcome-section" class="welcome">
@@ -255,7 +252,7 @@
 
         <!-- Iframe container for embedded pages (hidden initially) -->
         <div id="iframe-container" class="iframe-container">
-            <!-- scrolling is now allowed (default) so that iframe content can scroll -->
+            <!-- iframe with normal scrolling (so content can scroll inside) -->
             <iframe id="content-iframe" src="about:blank"></iframe>
         </div>
     </div>
