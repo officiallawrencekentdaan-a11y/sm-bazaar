@@ -55,7 +55,7 @@
             align-items: center;
             gap: 0.5rem;
             font-size: 1.8rem;
-            font-weight: 700; /* bolder */
+            font-weight: 700;
             letter-spacing: -0.5px;
             color: #3c4043;
         }
@@ -119,38 +119,40 @@
             content: '';
             position: absolute;
             inset: 0;
-            background-color: rgba(0, 0, 0, 0.5); /* adjust darkness here */
+            background-color: rgba(0, 0, 0, 0.5);
         }
 
-        /* White card for welcome message – sits above the overlay */
+        /* Welcome card – transparent with white border */
         .welcome-card {
-            background: white;
+            background: transparent;
             border-radius: 1.5rem;
             padding: 3rem 4rem;
-            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
-            border: 1px solid rgba(255, 255, 255, 0.5);
+            border: 2px solid white;
             text-align: center;
             max-width: 800px;
             width: 100%;
-            position: relative; /* ensures it stays above the overlay */
+            position: relative;
             z-index: 1;
+            backdrop-filter: blur(2px); /* subtle blur for extra elegance */
         }
 
         .welcome-card h1 {
             font-size: 4rem;
-            font-weight: 800; /* extra bold */
-            color: #1e2a3a;
+            font-weight: 800;
+            color: white;
             margin-bottom: 0.5rem;
             line-height: 1.2;
             letter-spacing: -0.02em;
+            text-shadow: 0 2px 4px rgba(0,0,0,0.3);
         }
 
         .welcome-card h1 span {
             display: block;
             font-size: 2.5rem;
             font-weight: 400;
-            color: #5f6368;
+            color: rgba(255, 255, 255, 0.9);
             margin-top: 0.5rem;
+            text-shadow: 0 2px 4px rgba(0,0,0,0.3);
         }
 
         /* Bazaar cards container */
@@ -202,7 +204,7 @@
             left: 0;
             right: 0;
             bottom: 0;
-            display: none; /* hidden by default */
+            display: none;
             background: white;
         }
 
@@ -311,7 +313,7 @@
 
             // Helper to show welcome and hide iframe
             function showWelcome() {
-                welcomeSection.style.display = 'flex';  // back to flex for centering
+                welcomeSection.style.display = 'flex';
                 iframeContainer.style.display = 'none';
                 navLinks.forEach(link => link.classList.remove('active'));
                 navHome.classList.add('active');
