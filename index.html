@@ -18,41 +18,46 @@
             background-color: #f8f9fa;
             color: #202124;
             line-height: 1.5;
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
         }
 
-        /* Announcement banner */
+        /* Announcement banner - thinner */
         .announcement {
             background-color: #1a73e8;
             color: white;
             text-align: center;
-            padding: 0.75rem 1rem;
-            font-size: 1rem;
+            padding: 0.3rem 1rem;
+            font-size: 0.9rem;
             font-weight: 500;
+            flex-shrink: 0;
         }
 
-        /* Main Navigation */
+        /* Main Navigation - thinner */
         .main-nav {
             background-color: white;
-            padding: 1rem 2rem;
+            padding: 0.5rem 2rem;
             display: flex;
             flex-wrap: wrap;
             align-items: center;
             justify-content: space-between;
             border-bottom: 1px solid #e0e0e0;
+            flex-shrink: 0;
         }
 
         .site-title {
             display: flex;
             align-items: center;
             gap: 0.5rem;
-            font-size: 2rem;
+            font-size: 1.8rem;
             font-weight: 500;
             letter-spacing: -0.5px;
             color: #3c4043;
         }
 
         .site-title img {
-            height: 2rem;
+            height: 1.5rem;
             width: auto;
             display: block;
         }
@@ -66,7 +71,7 @@
         .nav-links a {
             text-decoration: none;
             color: #3c4043;
-            padding-bottom: 4px;
+            padding-bottom: 2px;
             border-bottom: 2px solid transparent;
             transition: border-color 0.1s;
             cursor: pointer;
@@ -81,24 +86,34 @@
             border-bottom-color: #dadce0;
         }
 
-        /* Hero / Welcome section with background image */
-        .welcome {
-            position: relative;
+        /* Content area (fills remaining space, has consistent margins) */
+        .content-area {
+            flex: 1;
             margin: 1.5rem 2rem;
-            padding: 2.5rem 2rem;
-            border-radius: 0.5rem;
-            box-shadow: 0 1px 3px rgba(0,0,0,0.05);
-            border: 1px solid #f1f3f4;
-            text-align: center;
-            color: white;
+            position: relative;
+        }
+
+        /* Welcome section (visible by default) */
+        .welcome {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
             background-image: url('https://i.postimg.cc/JnWYkVfy/percision-blog-header-junk-food-102323.jpg');
             background-size: cover;
             background-position: center;
             background-repeat: no-repeat;
+            border-radius: 0.5rem;
+            border: 1px solid #f1f3f4;
+            color: white;
+            text-align: center;
+            padding: 2.5rem 2rem;
             isolation: isolate;
+            overflow: auto; /* allows scrolling if content overflows (rare) */
         }
 
-        /* Dark overlay for better text readability */
+        /* Dark overlay for welcome text */
         .welcome::before {
             content: '';
             position: absolute;
@@ -156,15 +171,17 @@
             font-size: 0.95rem;
         }
 
-        /* Iframe container */
+        /* Iframe container (hidden by default) */
         .iframe-container {
-            margin: 1.5rem 2rem;
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
             display: none; /* hidden by default */
-            height: 90vh; /* fixed height – cross‑origin prevents auto‑expansion */
             border-radius: 0.5rem;
-            box-shadow: 0 1px 3px rgba(0,0,0,0.05);
             border: 1px solid #f1f3f4;
-            overflow: hidden; /* hides any potential iframe scrollbars */
+            background: white;
         }
 
         .iframe-container iframe {
@@ -173,14 +190,15 @@
             border: none;
             background: white;
             display: block;
-            /* Scrolling is disabled via attribute, overflow hidden hides any leftover */
         }
 
-        /* Mobile */
+        /* Mobile adjustments */
         @media (max-width: 700px) {
-            .main-nav, .welcome, .iframe-container {
+            .main-nav {
                 padding-left: 1rem;
                 padding-right: 1rem;
+            }
+            .content-area {
                 margin-left: 1rem;
                 margin-right: 1rem;
             }
@@ -195,9 +213,6 @@
             }
             .welcome h1 {
                 font-size: 2rem;
-            }
-            .iframe-container {
-                height: 80vh;
             }
         }
     </style>
@@ -221,25 +236,28 @@
         </div>
     </div>
 
-    <!-- Welcome section with background image -->
-    <main id="welcome-section" class="welcome">
-        <h1>WELCOME TO SM BAZAAR</h1>
-        <div class="bazaar-cards">
-            <div id="card-baybay" class="card">
-                <h2>SM Baybay Bazaar</h2>
-                <p>Explore the Baybay market</p>
+    <!-- Content area that holds either welcome or iframe -->
+    <div class="content-area">
+        <!-- Welcome section (visible by default) -->
+        <main id="welcome-section" class="welcome">
+            <h1>WELCOME TO SM BAZAAR</h1>
+            <div class="bazaar-cards">
+                <div id="card-baybay" class="card">
+                    <h2>SM Baybay Bazaar</h2>
+                    <p>Explore the Baybay market</p>
+                </div>
+                <div id="card-cebu" class="card">
+                    <h2>SM Cebu Bazaar</h2>
+                    <p>Discover Cebu's finest</p>
+                </div>
             </div>
-            <div id="card-cebu" class="card">
-                <h2>SM Cebu Bazaar</h2>
-                <p>Discover Cebu's finest</p>
-            </div>
-        </div>
-    </main>
+        </main>
 
-    <!-- Iframe container for embedded pages (hidden initially) -->
-    <div id="iframe-container" class="iframe-container">
-        <!-- scrolling="no" disables iframe scrollbars; combined with container overflow:hidden ensures no internal scrolling -->
-        <iframe id="content-iframe" src="about:blank" scrolling="no"></iframe>
+        <!-- Iframe container for embedded pages (hidden initially) -->
+        <div id="iframe-container" class="iframe-container">
+            <!-- scrolling is now allowed (default) so that iframe content can scroll -->
+            <iframe id="content-iframe" src="about:blank"></iframe>
+        </div>
     </div>
 
     <script>
@@ -306,13 +324,5 @@
             });
         })();
     </script>
-    <!-- 
-        Note: Because Google Apps Script web apps send the HTTP header "X-Frame-Options: SAMEORIGIN",
-        they cannot be embedded in iframes on external domains like Netlify. 
-        You will likely see a blank iframe or a console error:
-        "Refused to display '...' in a frame because it set 'X-Frame-Options' to 'sameorigin'."
-        This is a security restriction that cannot be bypassed with HTML/JavaScript alone.
-        If you need to display the content, consider using direct links or a server-side proxy.
-    -->
 </body>
 </html>
