@@ -1,9 +1,273 @@
-<html>
-    <head>
-        <meta charset="utf-8">
-        <title></title>
-    </head>
-    <body>
-        <iframe src="https://sites.google.com/view/smbazaar/home" scrolling="no" style="border: none; width: 100%; height: 500px;"></iframe>
-    </body>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SM BAZAAR</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', sans-serif;
+            background-color: #f8f9fa;
+            color: #202124;
+            line-height: 1.5;
+        }
+
+        /* Announcement banner */
+        .announcement {
+            background-color: #1a73e8;
+            color: white;
+            text-align: center;
+            padding: 0.75rem 1rem;
+            font-size: 1rem;
+            font-weight: 500;
+        }
+
+        /* Main Navigation */
+        .main-nav {
+            background-color: white;
+            padding: 1rem 2rem;
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            justify-content: space-between;
+            border-bottom: 1px solid #e0e0e0;
+        }
+
+        .site-title {
+            font-size: 2rem;
+            font-weight: 500;
+            letter-spacing: -0.5px;
+            color: #3c4043;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+            font-size: 1rem;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: #3c4043;
+            padding-bottom: 4px;
+            border-bottom: 2px solid transparent;
+            transition: border-color 0.1s;
+            cursor: pointer;
+        }
+
+        .nav-links a.active {
+            border-bottom-color: #1a73e8;
+            color: #1a73e8;
+        }
+
+        .nav-links a:hover {
+            border-bottom-color: #dadce0;
+        }
+
+        /* Hero / Welcome section */
+        .welcome {
+            background-color: white;
+            margin: 1.5rem 2rem;
+            padding: 2.5rem 2rem;
+            border-radius: 0.5rem;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+            border: 1px solid #f1f3f4;
+            text-align: center;
+        }
+
+        .welcome h1 {
+            font-size: 2.8rem;
+            font-weight: 400;
+            margin-bottom: 2rem;
+            color: #1e2a3a;
+        }
+
+        .bazaar-cards {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 2rem;
+            margin-top: 1rem;
+        }
+
+        .card {
+            flex: 1 1 250px;
+            max-width: 320px;
+            background-color: #f8f9fa;
+            border-radius: 1rem;
+            padding: 2rem 1rem;
+            text-decoration: none;
+            color: inherit;
+            border: 1px solid #e8eaed;
+            transition: box-shadow 0.15s, border-color 0.15s;
+            cursor: pointer;
+        }
+
+        .card:hover {
+            border-color: #1a73e8;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.05);
+        }
+
+        .card h2 {
+            font-size: 1.8rem;
+            font-weight: 450;
+            margin-bottom: 0.5rem;
+            color: #1a73e8;
+        }
+
+        .card p {
+            color: #5f6368;
+            font-size: 0.95rem;
+        }
+
+        /* Iframe container */
+        .iframe-container {
+            margin: 1.5rem 2rem;
+            display: none; /* hidden by default */
+            height: 90vh; /* use most of the viewport height */
+        }
+
+        .iframe-container iframe {
+            width: 100%;
+            height: 100%;
+            border: none;
+            background: white;
+            border-radius: 0.5rem;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+            border: 1px solid #f1f3f4;
+        }
+
+        /* Mobile */
+        @media (max-width: 700px) {
+            .main-nav, .welcome, .iframe-container {
+                padding-left: 1rem;
+                padding-right: 1rem;
+                margin-left: 1rem;
+                margin-right: 1rem;
+            }
+            .main-nav {
+                flex-direction: column;
+                align-items: start;
+                gap: 0.75rem;
+            }
+            .nav-links {
+                flex-wrap: wrap;
+                gap: 1rem;
+            }
+            .welcome h1 {
+                font-size: 2rem;
+            }
+            .iframe-container {
+                height: 80vh; /* slightly smaller on mobile */
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Announcement banner -->
+    <div class="announcement">
+        🎉 SM Bazaar is now open! Special offers this weekend only.
+    </div>
+
+    <!-- Main navigation -->
+    <div class="main-nav">
+        <div class="site-title">SM BAZAAR</div>
+        <div class="nav-links">
+            <a id="nav-home" class="active">Home</a>
+            <a id="nav-baybay">SM Baybay Bazaar</a>
+            <a id="nav-cebu">SM Cebu Bazaar</a>
+        </div>
+    </div>
+
+    <!-- Welcome section (visible by default) -->
+    <main id="welcome-section" class="welcome">
+        <h1>WELCOME TO SM BAZAAR</h1>
+        <div class="bazaar-cards">
+            <div id="card-baybay" class="card">
+                <h2>SM Baybay Bazaar</h2>
+                <p>Explore the Baybay market</p>
+            </div>
+            <div id="card-cebu" class="card">
+                <h2>SM Cebu Bazaar</h2>
+                <p>Discover Cebu's finest</p>
+            </div>
+        </div>
+    </main>
+
+    <!-- Iframe container for embedded pages (hidden initially) -->
+    <div id="iframe-container" class="iframe-container">
+        <iframe id="content-iframe" src="about:blank" scrolling="no"></iframe>
+    </div>
+
+    <script>
+        (function() {
+            // URLs for the two bazaars
+            const baybayUrl = "https://script.google.com/a/macros/outdoorequipped.com/s/AKfycbx3f9uOLXaGEPfzbcwRHF0LwFV8hBi6oD32Dttls31NvZmonBmPuyYo0KEK5fMVqaOC/exec";
+            const cebuUrl = "https://script.google.com/a/macros/outdoorequipped.com/s/AKfycbxFH_c4aD4ePIuvsqrC4CA12Gm09kFPDfCMZXsYJjf1HlzwxKObg-WosUKOk3AbEYBo/exec";
+
+            // DOM elements
+            const navHome = document.getElementById('nav-home');
+            const navBaybay = document.getElementById('nav-baybay');
+            const navCebu = document.getElementById('nav-cebu');
+            const cardBaybay = document.getElementById('card-baybay');
+            const cardCebu = document.getElementById('card-cebu');
+            const welcomeSection = document.getElementById('welcome-section');
+            const iframeContainer = document.getElementById('iframe-container');
+            const contentIframe = document.getElementById('content-iframe');
+            const navLinks = [navHome, navBaybay, navCebu];
+
+            // Helper to show welcome and hide iframe
+            function showWelcome() {
+                welcomeSection.style.display = 'block';
+                iframeContainer.style.display = 'none';
+                // Update active nav
+                navLinks.forEach(link => link.classList.remove('active'));
+                navHome.classList.add('active');
+            }
+
+            // Helper to load a URL in iframe, hide welcome, show iframe
+            function loadUrl(url, activeLink) {
+                contentIframe.src = url;
+                welcomeSection.style.display = 'none';
+                iframeContainer.style.display = 'block';
+                // Update active nav
+                navLinks.forEach(link => link.classList.remove('active'));
+                activeLink.classList.add('active');
+            }
+
+            // Event listeners for navigation
+            navHome.addEventListener('click', function(e) {
+                e.preventDefault();
+                showWelcome();
+            });
+
+            navBaybay.addEventListener('click', function(e) {
+                e.preventDefault();
+                loadUrl(baybayUrl, navBaybay);
+            });
+
+            navCebu.addEventListener('click', function(e) {
+                e.preventDefault();
+                loadUrl(cebuUrl, navCebu);
+            });
+
+            // Event listeners for cards
+            cardBaybay.addEventListener('click', function(e) {
+                e.preventDefault();
+                loadUrl(baybayUrl, navBaybay);
+            });
+
+            cardCebu.addEventListener('click', function(e) {
+                e.preventDefault();
+                loadUrl(cebuUrl, navCebu);
+            });
+        })();
+    </script>
+</body>
 </html>
